@@ -23,23 +23,23 @@ class SimpleNet(nn.Module):
         self.conv1 = nn.Conv2d(1, 6, 5)
         self.bn1 = nn.BatchNorm2d(6)
         self.pool1 = nn.MaxPool2d(2, 2)
-        self.dropout1 = nn.Dropout(p=0.5)
+        self.dropout1 = nn.Dropout(p=0.1)
         
         # convolutional layer (6 x 46 x 46 -> 16 x 42 x 42)
         self.conv2 = nn.Conv2d(6, 16, 5)
         self.bn2 = nn.BatchNorm2d(16)
         self.pool2 = nn.MaxPool2d(2, 2)
-        self.dropout2 = nn.Dropout(p=0.5)
+        self.dropout2 = nn.Dropout(p=0.1)
         
         # linear layer (16 x 21 x 21 -> 7056)
         self.fc1 = nn.Linear(7056, 1024)
         self.bn3 = nn.BatchNorm1d(1024)
-        self.dropout3 = nn.Dropout(p=0.5)
+        self.dropout3 = nn.Dropout(p=0.1)
         
         # linear layer (512 -> 136)
         self.fc2 = nn.Linear(1024, 512)
         self.bn4 = nn.BatchNorm1d(512)
-        self.dropout4 = nn.Dropout(p=0.5)
+        self.dropout4 = nn.Dropout(p=0.1)
         
         # linear layer(512 -> 136)
         self.fc3 = nn.Linear(512 ,136)
