@@ -48,11 +48,11 @@ class LeNet(nn.Module):
         # linear layer(512 -> 136)
         self.fc3 = nn.Linear(512 ,136)
         
-        #I.xavier_uniform_(self.conv1.weight)
-        #I.xavier_uniform_(self.conv2.weight)
-        #I.xavier_uniform_(self.fc1.weight.data)
-        #I.xavier_uniform_(self.fc2.weight.data)
-        #I.xavier_uniform_(self.fc3.weight.data)
+        I.xavier_uniform_(self.conv1.weight)
+        I.xavier_uniform_(self.conv2.weight)
+        I.xavier_uniform_(self.fc1.weight)
+        I.xavier_uniform_(self.fc2.weight)
+        I.xavier_uniform_(self.fc3.weight)
         
         
     def forward(self, x):
