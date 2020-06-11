@@ -48,6 +48,7 @@ class LeNet(nn.Module):
         # linear layer(512 -> 136)
         self.fc3 = nn.Linear(512 ,136)
         
+        # initialize weights
         I.xavier_uniform_(self.conv1.weight)
         I.xavier_uniform_(self.conv2.weight)
         I.xavier_uniform_(self.fc1.weight)
@@ -121,10 +122,12 @@ class NaimishNet(nn.Module):
         # fully connected layer (1000 -> 136)
         self.fc3 = nn.Linear(1000, 136)
         
-        # Initialization
-        #I.xavier_uniform_(self.fc1.weight.data)
-        #I.xavier_uniform_(self.fc2.weight.data)
-        #I.xavier_uniform_(self.fc3.weight.data)
+        # initialize weights
+        I.xavier_uniform_(self.conv1.weight)
+        I.xavier_uniform_(self.conv2.weight)
+        I.xavier_uniform_(self.fc1.weight)
+        I.xavier_uniform_(self.fc2.weight)
+        I.xavier_uniform_(self.fc3.weight)
         
     def forward(self, x):
         ## Define the feedforward behavior of this model
@@ -193,10 +196,12 @@ class LargeNaimishNet(nn.Module):
         # fully connected layer (1000 -> 136)
         self.fc3 = nn.Linear(1000, 136)
         
-        # Initialization
-        I.xavier_uniform_(self.fc1.weight.data)
-        I.xavier_uniform_(self.fc2.weight.data)
-        I.xavier_uniform_(self.fc3.weight.data)
+        # initialize weights
+        I.xavier_uniform_(self.conv1.weight)
+        I.xavier_uniform_(self.conv2.weight)
+        I.xavier_uniform_(self.fc1.weight)
+        I.xavier_uniform_(self.fc2.weight)
+        I.xavier_uniform_(self.fc3.weight)
         
     def forward(self, x):
         ## Define the feedforward behavior of this model
