@@ -22,7 +22,7 @@ class EncoderCNN(nn.Module):
     
 
 class DecoderRNN(nn.Module):
-    def __init__(self, embed_size, hidden_size, vocab_size, num_layers=1):
+    def __init__(self, embed_size, hidden_size, vocab_size, num_layers=1, drop_prob=0.2):
         super(DecoderRNN, self).__init__()
         
         self.hidden_size = hidden_size
@@ -33,11 +33,15 @@ class DecoderRNN(nn.Module):
 
         # the LSTM takes embedded word vectors (of a specified size) as inputs 
         # and outputs hidden states of size hidden_dim
-        self.lstm = nn.LSTM(embed_size, hidden_size, num_layers)
+        self.gru = nn.GRU(embed_size, hidden_size, num_layers, batch_first=True, dropout=drop_prob)
 
+        # dropout layer
+        self.dropout = nn.Dropout(p=drop_prob)
+        
         # the linear layer that maps the hidden state output dimension 
         # to the number of words we want as output, vocab_size
         self.linear = nn.Linear(hidden_size, vocab_size)
+        
     
     def forward(self, features, captions):
         ''' Define the feedforward behavior of the model.'''
@@ -56,8 +60,9 @@ class DecoderRNN(nn.Module):
 
         # get the output and hidden state by passing the lstm over our word embeddings
         # the lstm takes in our embeddings and hidden state
-        lstm_out, _ = self.lstm(inputs)
-        outputs = self.linear(lstm_out)
+        gru_out, _ = self.gru(inputs)
+        gru_out = self.dropout(gru_out)
+        outputs = self.linear(gru_out)
         
         return outputs
 
