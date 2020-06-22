@@ -31,7 +31,7 @@ class DecoderRNN(nn.Module):
         # embedding layer that converts captions into a vector of a specified size
         self.caption_embeddings_layer = nn.Embedding(vocab_size, embed_size)
 
-        # the LSTM takes embedded word vectors (of a specified size) as inputs 
+        # the GRU takes embedded word vectors (of a specified size) as inputs 
         # and outputs hidden states of size hidden_dim
         self.gru = nn.GRU(embed_size, hidden_size, num_layers, batch_first=True, dropout=drop_prob)
 
@@ -58,8 +58,8 @@ class DecoderRNN(nn.Module):
         # inputs.shape == (batch_size, captions.shape[1], embed_size)
         inputs = torch.cat((features.unsqueeze(1), caption_embeddings), dim=1)
 
-        # get the output and hidden state by passing the lstm over our word embeddings
-        # the lstm takes in our embeddings and hidden state
+        # get the output and hidden state by passing the gru over our word embeddings
+        # the gru takes in our embeddings and hidden state
         gru_out, _ = self.gru(inputs)
         gru_out = self.dropout(gru_out)
         outputs = self.linear(gru_out)
@@ -68,7 +68,24 @@ class DecoderRNN(nn.Module):
 
     def sample(self, inputs, states=None, max_len=20):
         " accepts pre-processed image tensor (inputs) and returns predicted sentence (list of tensor ids of length max_len) "
-        sentance = []
+        sentence = []
         for w in range(max_len):
-            sentance.append(self.forward(inputs))
-        return sentance
+            # Get the output of the GRU
+            gru_outputs, states = self.gru(inputs, states)
+            gru_outputs = gru_outputs.squeeze(1)
+            out = self.linear(gru_outputs)
+            
+            # Pick the word with the highest score
+            word = out.max(1)[1]
+            
+            # If the word is <end>, end the sentence.
+            if (word == 1):
+                break
+            
+            # Add the word to the sentence
+            sentence.append(word.item())
+            
+            # Get the RNN output to the next step
+            inputs = self.caption_embeddings_layer(word).unsqueeze(1)
+            
+        return sentence
