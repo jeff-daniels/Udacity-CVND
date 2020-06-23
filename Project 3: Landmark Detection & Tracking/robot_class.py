@@ -86,13 +86,13 @@ class robot:
             ##    - Feel free to use the function self.rand() to help calculate this noise component
             ##    - It may help to reference the `move` function for noise calculation
             
-            dx = self.x - landmark[0] + self.rand() * self.measurement_noise
-            dy = self.y - landmark[1] + self.rand() * self.measurement_noise            
+            dx = landmark[0] - self.x + self.rand() * self.measurement_noise
+            dy = landmark[1] - self.y + self.rand() * self.measurement_noise            
             
             ## 3. If either of the distances, dx or dy, fall outside of the internal var, measurement_range
             ##    then we cannot record them; if they do fall in the range, then add them to the measurements list
             ##    as list.append([index, dx, dy]), this format is important for data creation done later
-            if (abs(dx) < self.measurement_range) and (abs(dy) < self.measurement_range):
+            if (abs(dx) <= self.measurement_range) and (abs(dy) <= self.measurement_range):
                 measurements.append([idx, dx, dy])
             
         ## return the final, complete list of measurements
