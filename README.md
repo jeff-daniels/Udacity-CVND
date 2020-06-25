@@ -1,4 +1,3 @@
-# Udacity-CVND
 # Udacity-Computer-Vision-Nanodegree
 
 This repository contains code used for completing the projects in the Udacity Computer Vision Nanodegree.
