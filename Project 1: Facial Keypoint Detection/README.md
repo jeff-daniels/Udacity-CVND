@@ -1,7 +1,5 @@
-# Udacity-Computer-Vision-Nanodegree
+# Project 1: Facial Keypoint Detection
 
-This repository contains code used for completing the projects in the Udacity Computer Vision Nanodegree.  The projects include:
+This project combines knowledge of computer vision techniques and deep learning architectures to build a facial keypoint detection system that takes in any image with faces, and predicts the location of 68 distinguishing keypoints on each face.
 
-Project 1: Facial Keypoint Detection  
-Project 2: Automatic Image Captioning  
-Project 3: Simultaneous Localization and Mapping  
+Facial keypoints include points around the eyes, nose, and mouth on a face and are used in many applications. These applications include: facial tracking, facial pose recognition, facial filters, and emotion recognition. The code defines and trains a Convolutional Neural Network (CNN) using PyTorch to be able to look at any image, detect faces, and predict the locations of facial keypoints on each face.
